@@ -20,39 +20,6 @@ import copy
 import argparse
 import cv2
 
-def main():
-    parser = argparse.ArgumentParser(description="Training a pytorch model to classify animals and another to classify habitats",add_help=False)
-    parser.add_argument('-a','--animal',help="Outputs animal name from image")
-    parser.add_argument('-h','--habitat',help="Outputs habitat name from image")
-    parser.add_argument('--amod',default= "./animal-model.pth",help="Use a trained animal model")
-    parser.add_argument('--hmod',default="./habitat-model.pth",help="Use a trained habitat model")
-    args = parser.parse_args()
-
-    animal_labels=['arctic fox', 'bear', 'bee', 'butterfly', 'cat', 'cougar', 'cow', 'coyote', 'crab',
-        'crocodile', 'deer', 'dog', 'eagle', 'elephant', 'fish', 'frog', 'giraffe',
-        'goat', 'hippo', 'horse', 'kangaroo', 'lion', 'monkey', 'otter', 'panda',
-        'parrot', 'penguin', 'raccoon', 'rat', 'seal', 'shark', 'sheep', 'skunk',
-        'snake', 'snow leopard', 'tiger', 'yak', 'zebra']
-    habitat_labels=['baseball', 'basketball court', 'beach', 'circular farm', 'cloud', 'commercial area',
-        'dense residential','desert','forest','golf course','harbor','island',
-        'lake','meadow','medium residential area','mountain','rectangular farm','river',
-        'sea glacier','shrubs','snowberg','sparse residential area','thermal power station','wetland']
-
-    if args.animal:
-        model=torch.load(args.amod)
-        img = Image.open(args.animal)
-        index = predict_image(img, model)
-        name = animal_labels[index]
-        img.show()
-        print(name)
-    else:
-        model=torch.load(args.hmod)
-        img = Image.open(args.habitat)
-        index = predict_image(img, model)
-        name = habitat_labels[index]
-        img.show()
-        print(name)
-
 def predict_image(image, model):
     test_transform = transforms.Compose([
         transforms.Resize(224),
@@ -66,6 +33,38 @@ def predict_image(image, model):
     index = output.data.cpu().numpy().argmax()
     return index
 
+parser = argparse.ArgumentParser(description="Training a pytorch model to classify animals and another to classify habitats",add_help=False)
+parser.add_argument('-a','--animal',help="Outputs animal name from image")
+parser.add_argument('-h','--habitat',help="Outputs habitat name from image")
+parser.add_argument('--amod',default= "./animal-model.pth",help="Use a trained animal model")
+parser.add_argument('--hmod',default="./habitat-model.pth",help="Use a trained habitat model")
+args = parser.parse_args()
+
+animal_labels=['arctic fox', 'bear', 'bee', 'butterfly', 'cat', 'cougar', 'cow', 'coyote', 'crab',
+        'crocodile', 'deer', 'dog', 'eagle', 'elephant', 'fish', 'frog', 'giraffe',
+        'goat', 'hippo', 'horse', 'kangaroo', 'lion', 'monkey', 'otter', 'panda',
+        'parrot', 'penguin', 'raccoon', 'rat', 'seal', 'shark', 'sheep', 'skunk',
+        'snake', 'snow leopard', 'tiger', 'yak', 'zebra']
+habitat_labels=['baseball', 'basketball court', 'beach', 'circular farm', 'cloud', 'commercial area',
+        'dense residential','desert','forest','golf course','harbor','island',
+        'lake','meadow','medium residential area','mountain','rectangular farm','river',
+        'sea glacier','shrubs','snowberg','sparse residential area','thermal power station','wetland']
+
+if args.animal:
+    model=torch.load(args.amod)
+    img = Image.open(args.animal)
+    index = predict_image(img, model)
+    name = animal_labels[index]
+    img.show()
+    print("Image is a {}".format(name))
+else:
+    model=torch.load(args.hmod)
+    img = Image.open(args.habitat)
+    index = predict_image(img, model)
+    name = habitat_labels[index]
+    img.show()
+    print("Image is a {}".format(name))
+
 if __name__ == '__main__':
-    main()
+    pass
 
