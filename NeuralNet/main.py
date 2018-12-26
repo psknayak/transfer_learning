@@ -1,22 +1,8 @@
-from __future__ import print_function,division
-import utils
-from utils import animal_dataset,habitat_dataset
-import model_init, model
 import os
 import torch
-import torch.nn as nn
-import torch.optim as optim
-from torch.optim import lr_scheduler
-from torchvision import models
 import torchvision.transforms as transforms
 from torch.autograd import Variable
-import torchvision.datasets
-import numpy as np
-import matplotlib.pyplot as plt
-import PIL
 from PIL import Image
-import time
-import copy
 import argparse
 import cv2
 
@@ -30,7 +16,7 @@ def predict_image(image, model):
     image_tensor = image_tensor.unsqueeze(0)
     input = Variable(image_tensor.cuda())
     output = model(input)
-    index = output.data.cpu().numpy().argmax()
+    index = output.data.cuda().argmax()
     return index
 
 parser = argparse.ArgumentParser(description="Training a pytorch model to classify animals and another to classify habitats",add_help=False)
@@ -45,6 +31,7 @@ animal_labels=['arctic fox', 'bear', 'bee', 'butterfly', 'cat', 'cougar', 'cow',
         'goat', 'hippo', 'horse', 'kangaroo', 'lion', 'monkey', 'otter', 'panda',
         'parrot', 'penguin', 'raccoon', 'rat', 'seal', 'shark', 'sheep', 'skunk',
         'snake', 'snow leopard', 'tiger', 'yak', 'zebra']
+
 habitat_labels=['baseball', 'basketball court', 'beach', 'circular farm', 'cloud', 'commercial area',
         'dense residential','desert','forest','golf course','harbor','island',
         'lake','meadow','medium residential area','mountain','rectangular farm','river',
@@ -67,4 +54,3 @@ else:
 
 if __name__ == '__main__':
     pass
-
