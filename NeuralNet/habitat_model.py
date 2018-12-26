@@ -27,10 +27,9 @@ habitat_model = habitat_model.to(device)
 
 criterion = nn.CrossEntropyLoss()
 
-"""Observe that all parameters are being optimized"""
 optimizer_ft = optim.SGD(habitat_model.parameters(), lr=0.001, momentum=0.9)
 
-"""Decay LR by a factor of 0.1 every 7 epochs"""
+"""Decay LR by a factor of 0.1 every 5 epochs"""
 exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=5, gamma=0.1)
 
 def data_loading(train_df, validation_df):
