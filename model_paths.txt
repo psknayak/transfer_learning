@@ -1,4 +1,0 @@
-Model Paths
-
-./NeuralNet/animal-model.pth
-./NeuralNet/habitat-model.pth

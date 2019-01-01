@@ -31,9 +31,7 @@ def create_meta_csv(dataset_path, destination_path):
     # Change dataset path accordingly
     DATASET_PATH = os.path.abspath(dataset_path)
     print(DATASET_PATH)
-    file_present = os.path.isfile(DATASET_PATH + './animal_dataset.csv')
-    if not file_present:
-
+    if not os.path.exists(os.path.join(DATASET_PATH, "/animal_dataset.csv")):
         filelist = os.listdir(DATASET_PATH)
         dataSet = list()
         for x in filelist:
@@ -121,7 +119,6 @@ def train_test_split(dframe, split_ratio):
     """
     # divide into train and test dataframes
     train_data = dframe[:int(len(dframe) * split_ratio)]
-    # validation_data= dframe[:int(len(train_data) * 0.1)]
     test_data = dframe[int(len(dframe) * split_ratio):]
     return train_data, test_data
 
@@ -153,7 +150,6 @@ class ImageDataset(Dataset):
         img_path = self.data.iloc[idx]['path']
         img = Image.open(img_path).convert('RGBA')
         bkgnd = Image.new('RGBA', img.size, (255,255,255))
-
         alpha_compose = Image.alpha_composite(bkgnd,img)
         image = alpha_compose.convert('RGB')
         label = self.label_encode[self.data.iloc[idx]['label']]  # get label (derived from self.classimport torch.utils.data.Datasetes; type: int/long) of image
@@ -161,10 +157,9 @@ class ImageDataset(Dataset):
             image = self.transform(image)
         return image, label
 
-
 if __name__ == "__main__":
     # test config
-    dataset_path = './datasets/Animals/AnimalsDataset'
+    dataset_path = './datasets/Animals/Animals Dataset'
     dest = './datasets/Animals/'
     classes = 38
     total_rows = 4131

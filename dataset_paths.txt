@@ -1,12 +1,12 @@
 Dataset paths
 
-./NeuralNet/datasets/Animals/AnimalsDataset
-./NeuralNet/datasets/Habitats/HabitatsDataset
+./NeuralNet/datasets/Animals/Animals Dataset
+./NeuralNet/datasets/Habitats/Habitats Dataset
 
-Place the animal classes folders(38) in AnimalsDataset
+Place the animal classes folders(38) in Animals Dataset
 
-Place the habitat classes folders(24) in HabitatsDataset
+Place the habitat classes folders(24) in Habitats Dataset
 
-Example: ./NeuralNet/datasets/Animals/AnimalsDataset/arctic fox
+Example: ./NeuralNet/datasets/Animals/Animals Dataset/arctic fox
 
 
